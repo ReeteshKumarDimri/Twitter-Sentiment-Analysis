@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+ 
+<style>
+@property --p{
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+.pie {
+  --p:20;
+  --b:22px;
+  --c:darkred;
+  --w:200px;
+  color:azure;
+  width:var(--w);
+  aspect-ratio:1;
+  position:relative;
+  display:inline-grid;
+  margin:100px;
+  margin-right: 120px;
+  place-content:center;
+  font-size:25px;
+  font-weight:bold;
+  font-family:sans-serif;
+}
+.pie:before,
+.pie:after {
+  content:"";
+  position:absolute;
+  border-radius:50%;
+}
+.pie:before {
+  inset:0;
+  background:
+    radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+    conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+  -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+          mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+}
+.pie:after {
+  inset:calc(50% - var(--b)/2);
+  background:var(--c);
+  transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+}
+.animate {
+  animation:p 1s .5s both;
+}
+.no-round:before {
+  background-size:0 0,auto;
+}
+.no-round:after {
+  content:none;
+}
+@keyframes p {
+  from{--p:0}
+}
+.box {
+  float: left;
+  height: 20px;
+  width: 20px;
+  margin-bottom: 15px;
+  border: 1px solid black;
+  clear: both;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: lightgreen;
+}
+
+.blue {
+  background-color: lightblue;
+}
+
+  body
+{
+  background-color: rgb(14, 14, 20);
+  
+}
+.header
+{
+  background-color: rgb(255, 255, 255);
+  background-image: url("{{url_for('static',filename='wallpaperflare.com_wallpaper.jpg')}}");
+  padding: 30px;
+  border-radius: 25px;
+  text-align: center;
+}
+.search
+{
+  background-color: rgb(166, 176, 194);
+  padding: 18px;
+  color:rgb(19, 35, 43);
+  text-align: center;
+  font-family: fantasy;
+  font-style: bolder;
+  font-size: 20x;
+  font-weight: 900px;
+  border-radius: 25px;
+}
+.text
+{
+  font-size: 21px;
+}
+.button
+{
+  background-color: #22537c;
+  border: 2px;
+  border-radius: 20px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+}
+.searchBar
+{
+  border: 2px;
+  border-radius: 25px;
+  height: 25px;
+  border-color:rgb(166, 176, 194) ;
+}
+h1.center
+{
+  font-family: fantasy;
+  font-style: bold;
+  font-size: 60px;
+  font-weight: 900;
+  text-align: center;
+  color: rgb(229, 229, 248);
+  text-shadow: 2px 2px 5px rgb(108, 213, 245);
+}
+div.search
+{
+  text-align: center;
+  font-size: 30;
+}
+
+#warn
+{
+  font-family: fantasy;
+  font-style: bold;
+  font-size: 60px;
+  font-weight: 900;
+  text-align: center;
+  color: rgb(214, 26, 67);
+  text-shadow: 2px 2px 5px rgb(156, 123, 123);
+}
+#INFO
+{
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  background-color: rgba(39, 38, 38, 0.972);
+  border-radius: 25px;
+  font-style: bold;
+  font-size: 45px;
+  font-weight: 900;
+  text-align: center;
+  color: rgb(95, 161, 171);
+}
+
+#container
+{
+  align-content: center;
+}
+</style>
+</head>
+
+<body>
+<div class="header"><h1 class="center">TWITTER SENTIMENT ANALYSIS</h1></div>
+<form action="http://localhost:5000/Fetch_Data" method="post">
+<div class = "search">
+  <label for="keyword" class="text">ENTER THE KEYWORD :</label>
+  <input type="text" id="keyword" name="q" class="searchBar" >
+  <button type="submit" class ="button">Search</button>
+
+</div>
+<div id = {{c}}>
+  {{warning}}
+</div>
+
+</form>
+{% if disp == True%}
+<div id = 'container'>
+  <div class="pie animate" style="--p:{{pos}};--c:lightgreen"> {{pos}}%</div>
+  <div class="pie animate" style="--p:{{neu}};--c:lightblue"> {{neu}}%</div>
+  <div class="pie animate" style="--p:{{neg}};--c:red"> {{neg}}%</div>  
+</div>
+
+<div><div class='box green' color : 'white'></div> <font color="white"><b>Positive</b></font></div>
+<br>
+<div><div class='box blue' color : 'white'></div> <font color="white"><b>Neutral</b></font></div>
+<br>
+<div><div class='box red' color : 'white'></div>  <font color="white"><b>Negative</b></font></div>
+{% endif %}
+
+
+
+
+
+</body>
+</html>
